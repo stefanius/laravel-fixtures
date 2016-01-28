@@ -19,20 +19,50 @@ class FixtureSeeder extends Seeder
     public function run()
     {
         $this->truncate();
-        $ymlFilename = '/home/vagrant/laravel-fixtures/resources/fixtures/' . $this->table . '.yml';
-        $data = \Symfony\Component\Yaml\Yaml::parse(file_get_contents($ymlFilename));
+
+        $data = $this->loadYmlData($this->table);
 
         switch ($data) {
             case (array_key_exists('entity', $data['settings']) && !is_null($data['settings']['entity'])):
-                $this->withEntity($data['settings']['entity'], $data['items']);
+                $this->withEntity($data['settings'], $data['items']);
         }
     }
 
-    protected function withEntity($entity, $items)
+    protected function withEntity($settings, $items)
     {
+        $entity = $settings['entity'];
+        $fk = false;
+
+        if (array_key_exists('foreign_key', $settings)) {
+            $fk = $settings['foreign_key'];
+        }
+
         foreach ($items as $item) {
+            if($fk && array_key_exists($fk, $item)) {
+                $item[$fk] = $this->findRelationId($item[$fk]);
+            }
+
             $entity::create($item);
         }
+    }
+
+    protected function loadYmlData($file)
+    {
+        $ymlFilename = '/home/vagrant/laravel-fixtures/resources/fixtures/' . $file . '.yml';
+
+        return \Symfony\Component\Yaml\Yaml::parse(file_get_contents($ymlFilename));
+    }
+
+    protected function findRelationId($key)
+    {
+        if (strpos($key, '@') === false) {
+            //trow error
+        }
+
+        $split = explode('@', $key);
+        $data = $this->loadYmlData($split[0]);
+
+        return $data['items'][$split[1]]['id'];
     }
 
     /**

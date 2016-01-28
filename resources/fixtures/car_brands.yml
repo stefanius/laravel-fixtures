@@ -2,10 +2,14 @@ settings:
   entity: App\Entities\CarBrand
 items:
   car_1:
+    id: 1
     name: Opel
   car_2:
+    id: 2
     name: Mercedes
   car_3:
+    id: 3
     name: Kia
   car_4:
+    id: 4
     name: Peugeot

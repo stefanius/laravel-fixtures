@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCarBrandsTable extends Migration
+class CreateCarTypesTable extends Migration
 {
     /**
      * Run the migrations.

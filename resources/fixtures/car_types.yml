@@ -4,19 +4,19 @@ settings:
 items:
   type_1:
     name: Corsa
-    car_type_id: car_brands@car_1
+    car_brand_id: car_brands@car_1
   type_2:
     name: Astra
-    car_type_id: car_brands@car_1
+    car_brand_id: car_brands@car_1
   type_3:
     name: Agila
-    car_type_id: car_brands@car_1
+    car_brand_id: car_brands@car_1
   type_4:
     name: 107
-    car_type_id: car_brands@car_4
+    car_brand_id: car_brands@car_4
   type_5:
     name: 307
-    car_type_id: car_brands@car_4
+    car_brand_id: car_brands@car_4
   type_6:
     name: Kadett
-    car_type_id: car_brands@car_1
+    car_brand_id: car_brands@car_1
