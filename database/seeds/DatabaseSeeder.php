@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->loadFixtures(FixtureSeeder::class, 'car_brands');
+        $this->loadFixtures(FixtureSeeder::class, 'car_types');
     }
 
     /**
