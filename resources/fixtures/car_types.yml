@@ -1,6 +1,8 @@
 settings:
   entity: App\Entities\CarType
-  foreign_key: car_type_id
+  foreign_key:
+    car_brand_id: id
+    ggggg: id
 items:
   type_1:
     name: Corsa

@@ -38,8 +38,12 @@ class FixtureSeeder extends Seeder
         }
 
         foreach ($items as $item) {
-            if($fk && array_key_exists($fk, $item)) {
-                $item[$fk] = $this->findRelationId($item[$fk]);
+            if($fk && is_array($fk)) {
+                foreach ($fk as $foreign => $primary) {
+                    if (array_key_exists($foreign, $item)) {
+                        $item[$foreign] = $this->findRelation($item[$foreign])[$primary];
+                    }
+                }
             }
 
             $entity::create($item);
@@ -53,7 +57,7 @@ class FixtureSeeder extends Seeder
         return \Symfony\Component\Yaml\Yaml::parse(file_get_contents($ymlFilename));
     }
 
-    protected function findRelationId($key)
+    protected function findRelation($key)
     {
         if (strpos($key, '@') === false) {
             //trow error
@@ -62,7 +66,7 @@ class FixtureSeeder extends Seeder
         $split = explode('@', $key);
         $data = $this->loadYmlData($split[0]);
 
-        return $data['items'][$split[1]]['id'];
+        return $data['items'][$split[1]];
     }
 
     /**
@@ -70,12 +74,12 @@ class FixtureSeeder extends Seeder
      */
     public function truncate()
     {
-        if (DB::getDriverName() === 'mysql') {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        if (\DB::getDriverName() === 'mysql') {
+            \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-            DB::table($this->table)->truncate();
+            \DB::table($this->table)->truncate();
 
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
     }
 }
