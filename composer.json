@@ -1,11 +1,11 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "stefanius/laravel-fixtures",
+    "description": "Load YAML fixtures in your Laravel project",
+    "keywords": ["fixtures", "laravel", "yaml", "yml", "database", "seed", "seeder", "migration"],
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.6.0",
         "laravel/framework": "5.2.*",
         "symfony/yaml": "^3.0"
     },
@@ -19,13 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
             "Stefanius\\LaravelFixtures\\": "src/Stefanius/LaravelFixtures/"
         }
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php",
+            "tests",
             "testdata"
         ]
     },
