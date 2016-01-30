@@ -20,7 +20,7 @@ class LoaderTest extends TestCase
      */
     public function testConstructorWithExistingPathButNonExistingFile()
     {
-        $loader = new Loader('/home/vagrant/laravel-fixtures/testdata/database/fixtures');
+        $loader = new Loader($this->formatTestApplicationPath('database/fixtures'));
 
         $loader->loadYmlData('does_not_exist');
     }
@@ -34,7 +34,7 @@ class LoaderTest extends TestCase
      */
     public function testFixtureData($filename, $numberOfItems, $expectedLastItem)
     {
-        $loader = new Loader('/home/vagrant/laravel-fixtures/testdata/database/fixtures');
+        $loader = new Loader($this->formatTestApplicationPath('database/fixtures'));
 
         $data = $loader->loadYmlData($filename);
 

@@ -25,7 +25,7 @@ class SeederTest extends TestCase
      */
     public function testPersistenceOfTheRecords($table)
     {
-        $loader = new Loader('/home/vagrant/laravel-fixtures/testdata/database/fixtures');
+        $loader = new Loader($this->formatTestApplicationPath('database/fixtures'));
         $seeder = new Seeder($loader);
 
         $seeder->seed($table);
