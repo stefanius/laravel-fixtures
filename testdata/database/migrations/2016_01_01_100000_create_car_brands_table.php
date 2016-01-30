@@ -26,6 +26,6 @@ class CreateCarBrandsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('password_resets');
+        Schema::drop('car_brands');
     }
 }
