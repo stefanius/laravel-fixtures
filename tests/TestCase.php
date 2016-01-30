@@ -11,7 +11,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__ . '/../testdata/bootstrap/app.php';
+        $app = require $this->formatTestApplicationPath('bootstrap/app.php');
 
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
