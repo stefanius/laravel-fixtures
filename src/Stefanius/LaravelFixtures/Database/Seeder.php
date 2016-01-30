@@ -3,7 +3,6 @@
 namespace Stefanius\LaravelFixtures\Database;
 
 use Stefanius\LaravelFixtures\Yaml\Loader;
-use Illuminate\Database\Connection;
 
 class Seeder
 {
