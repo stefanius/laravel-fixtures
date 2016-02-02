@@ -26,7 +26,7 @@ class Seeder
      */
     public function seed($table)
     {
-        $this->truncate($table);
+        //$this->truncate($table);
 
         $data = $this->yamlLoader->loadYmlData($table);
 

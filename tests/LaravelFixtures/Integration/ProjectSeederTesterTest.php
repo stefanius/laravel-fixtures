@@ -2,10 +2,8 @@
 
 namespace Tests\LaravelFixtures\Database;
 
-use Stefanius\LaravelFixtures\FixtureSeeder;
 use Stefanius\LaravelFixtures\Test\Contracts\LaravelFixtureTesterContract;
 use Stefanius\LaravelFixtures\Test\Traits\TestableFixtureTrait;
-use Stefanius\LaravelFixtures\Yaml\Loader;
 use Tests\TestCase;
 
 class ProjectSeederTesterTest extends TestCase implements LaravelFixtureTesterContract
