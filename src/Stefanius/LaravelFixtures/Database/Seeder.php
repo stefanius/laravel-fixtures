@@ -33,6 +33,10 @@ class Seeder
         switch ($data) {
             case (array_key_exists('entity', $data['settings']) && !is_null($data['settings']['entity'])):
                 $this->withEntity($data['settings'], $data['items']);
+                break;
+            case (array_key_exists('factory', $data['settings']) && !is_null($data['settings']['factory'])):
+                $this->withFactory($data['settings'], $data['items']);
+                break;
         }
     }
 
@@ -59,6 +63,32 @@ class Seeder
             }
 
             $entity::create($item);
+        }
+    }
+
+    /**
+     * @param $settings
+     * @param $items
+     */
+    protected function withFactory($settings, $items)
+    {
+        $entity = $settings['factory'];
+        $fk = false;
+
+        if (array_key_exists('foreign_key', $settings)) {
+            $fk = $settings['foreign_key'];
+        }
+
+        foreach ($items as $item) {
+            if($fk && is_array($fk)) {
+                foreach ($fk as $foreign => $primary) {
+                    if (array_key_exists($foreign, $item)) {
+                        $item[$foreign] = $this->findRelation($item[$foreign])[$primary];
+                    }
+                }
+            }
+
+            factory($entity)->create($item);
         }
     }
 

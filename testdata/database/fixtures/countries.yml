@@ -1,0 +1,15 @@
+settings:
+  factory: App\Entities\Country
+items:
+  country_1:
+    id: 1
+    name: Belgium
+    language: nl-fr
+  country_2:
+    id: 2
+    name: Netherlands
+    language: nl
+  country_3:
+    id: 3
+    name: United States
+    language: en

@@ -25,6 +25,7 @@ class ProjectSeederTesterTest extends TestCase implements LaravelFixtureTesterCo
         return [
             ['car_brands'],
             ['car_types'],
+            ['countries'],
         ];
     }
 }
