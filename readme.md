@@ -6,3 +6,19 @@ The Yaml fixture seeder for the Laravel Framework.
 [![Total Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/downloads)](https://packagist.org/packages/stefanius/laravel-fixtures) 
 [![Latest Unstable Version](https://poser.pugx.org/stefanius/laravel-fixtures/v/unstable)](https://packagist.org/packages/stefanius/laravel-fixtures) 
 [![License](https://poser.pugx.org/stefanius/laravel-fixtures/license)](https://packagist.org/packages/stefanius/laravel-fixtures)
+
+## Why this package?
+The Seeder classes are very powerfull and to be honest: This package has a lot less options. Imagine that you have lists
+of data you want to seed. The problem only is that the Seeder classes needs to be programmed. With lots and lots of array's,
+in my opinion it will end up in large PHP files and hardly to read and maintain. 
+
+This package provides a Yaml structure, based per-table but you can make relationships between them. See therefore the examples.
+
+## Installation
+To install this package on your Laravel project, you only have to add it to your Composer file. There is no need (and also impossible)
+to add a Facade or ServiceProvider.
+
+``` shell> composer require stefanius/laravel-fixtures ```
+
+## In progress
+The package is almost stable but the readme.md file is still in progress. Keep in touch to see if there are any updates!
