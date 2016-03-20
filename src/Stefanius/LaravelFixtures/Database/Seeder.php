@@ -41,7 +41,7 @@ class Seeder
         $data = $this->yamlLoader->loadYmlData($table);
 
         if ($this->command) {
-            $this->command->info('<strong>Fixture</strong> ' . $table);
+            $this->command->getOutput()->writeln("<info>Seeded Fixture:</info> $table");
         }
 
         switch ($data) {

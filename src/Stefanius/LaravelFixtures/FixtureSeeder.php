@@ -8,6 +8,17 @@ use Stefanius\LaravelFixtures\Yaml\Loader;
 
 class FixtureSeeder
 {
+    static $command = null;
+
+    /**
+     * Sets the Command parameter if you want to verbose the output.
+     * @param $command
+     */
+    static function SetCommand($command)
+    {
+        self::$command = $command;
+    }
+
     /**
      * @param string $table
      * @param string $fixturePath
@@ -29,7 +40,7 @@ class FixtureSeeder
         }
 
         $loader = new Loader($fixturePath);
-        $seeder = new Seeder($loader);
+        $seeder = new Seeder($loader, self::$command);
 
         $seeder->seed($table);
     }
