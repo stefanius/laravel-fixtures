@@ -2,6 +2,7 @@
 
 namespace Stefanius\LaravelFixtures\Database;
 
+use Illuminate\Console\Command;
 use Stefanius\LaravelFixtures\Yaml\Loader;
 
 class Seeder
@@ -12,13 +13,22 @@ class Seeder
     protected $yamlLoader;
 
     /**
+     * The console command instance.
+     *
+     * @var \Illuminate\Console\Command
+     */
+    protected $command;
+
+    /**
      * Seeder constructor.
      *
-     * @param Loader $yamlLoader
+     * @param Loader  $yamlLoader
+     * @param Command $command
      */
-    public function __construct(Loader $yamlLoader)
+    public function __construct(Loader $yamlLoader, Command $command = null)
     {
         $this->yamlLoader = $yamlLoader;
+        $this->command    = $command;
     }
 
     /**
@@ -29,6 +39,10 @@ class Seeder
         //$this->truncate($table);
 
         $data = $this->yamlLoader->loadYmlData($table);
+
+        if ($this->command) {
+            $this->command->info('<strong>Fixture</strong> ' . $table);
+        }
 
         switch ($data) {
             case (array_key_exists('entity', $data['settings']) && !is_null($data['settings']['entity'])):
