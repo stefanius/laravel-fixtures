@@ -2,7 +2,6 @@ settings:
   entity: App\Entities\CarType
   foreign_key:
     car_brand_id: id
-    ggggg: id
 items:
   type_1:
     name: Corsa
@@ -14,10 +13,10 @@ items:
     name: Agila
     car_brand_id: car_brands@car_1
   type_4:
-    name: 107
+    name: '107'
     car_brand_id: car_brands@car_4
   type_5:
-    name: 307
+    name: '307'
     car_brand_id: car_brands@car_4
   type_6:
     name: Kadett

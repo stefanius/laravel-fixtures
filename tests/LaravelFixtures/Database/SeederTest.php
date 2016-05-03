@@ -35,12 +35,90 @@ class SeederTest extends TestCase
         $this->assertArrayHasKey('settings', $data);
         $this->assertArrayHasKey('items', $data);
 
-        foreach ($data['items'] as $item) {
-            unset($item['car_brand_id']); //Just test if a record is persisted. Relations are tested separate.
-            unset($item['pivot']); //Just test if a record is persisted. Relations are tested separate.
+        $this->seePersistenceWithoutRelations($table, $data['items'], $data['settings']);
+        $this->seePersistenceWithRelations($table, $data['items'], $data['settings']);
 
-            $this->seeInDatabase($table, $item);
+    }
+
+    private function loadRelatedObjectData($key)
+    {
+        if (strpos($key, '@') === false) {
+            return null;
         }
+
+        $split = explode('@', $key);
+
+        $loader = new Loader($this->formatTestApplicationPath('database/fixtures'));
+
+        $data = $loader->loadYmlData($split[0]);
+
+        return $data['items'][$split[1]];
+    }
+
+    private function seePersistenceWithoutRelations($table, $items, $settings)
+    {
+        foreach ($items as $item) {
+            $withoutRelations = $this->stripRelationFromItem($settings, $item);
+
+            $this->seeInDatabase($table, $withoutRelations);
+        }
+    }
+
+    private function seePersistenceWithRelations($table, $items, $settings)
+    {
+        if (!array_key_exists('foreign_key', $settings)) {
+            return;
+        }
+
+        foreach ($items as $item) {
+            $relatedData = [];
+
+            $object = $this->loadFromDatabase($table, $this->stripRelationFromItem($settings, $item));
+
+            foreach ($item as $key => $value) {
+                $relatedData[$key] = $this->loadRelatedObjectData($value);
+            }
+
+            foreach ($settings['foreign_key'] as $key => $value) {
+                $this->assertEquals($relatedData[$key]['id'], $object->$key);
+            }
+        }
+    }
+
+    /**
+     * Assert that a given where condition exists in the database.
+     *
+     * @param  string  $table
+     * @param  array  $data
+     * @param  string  $connection
+     * @return $this
+     */
+    protected function loadFromDatabase($table, array $data)
+    {
+        $database = $this->app->make('db');
+
+        return $database->table($table)->where($data)->first();
+    }
+
+    /**
+     * @param $settings
+     * @param $item
+     *
+     * @return array
+     */
+    protected function stripRelationFromItem($settings, $item)
+    {
+        unset($item['pivot']);
+
+        if (!array_key_exists('foreign_key', $settings) || !is_array($settings['foreign_key'])) {
+            return $item;
+        }
+
+        foreach ($settings['foreign_key'] as $key => $value) {
+            unset($item[$key]);
+        }
+
+        return $item;
     }
 
     /**
