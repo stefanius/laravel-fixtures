@@ -20,6 +20,46 @@ class FixtureSeeder
     }
 
     /**
+     * The Laravel console command
+     */
+    static $command = null;
+
+    /**
+     * The fixture path (optional)
+     *
+     * @var string
+     */
+    static $fixturePath = null;
+
+    /**
+     * Sets the Command parameter if you want to verbose the output.
+     *
+     * @param $command
+     */
+    static function SetCommand($command)
+    {
+        self::$command = $command;
+    }
+
+    /**
+     * Sets the default fixturepath.
+     *
+     * @param $fixturePath
+     *
+     * @throws PathNotFoundException
+     */
+    static function SetFixturePath($fixturePath)
+    {
+        if (is_null($fixturePath) || !is_dir(base_path($fixturePath))) {
+            throw new PathNotFoundException($fixturePath);
+        }
+
+        self::$fixturePath = $fixturePath;
+    }
+
+    /**
+     * Seeds the table with fixture data
+     *
      * @param string $table
      * @param string $fixturePath
      *
@@ -31,8 +71,12 @@ class FixtureSeeder
             throw new \InvalidArgumentException('The $table argument has to be a string and may not be NULL.');
         }
 
-        if (!is_null($fixturePath) && (!is_dir($fixturePath) || !is_dir(base_path($fixturePath)))) {
+        if (!is_null($fixturePath) && !is_dir(base_path($fixturePath))) {
             throw new PathNotFoundException($fixturePath);
+        }
+
+        if (is_null($fixturePath) && !is_null(self::$fixturePath)) {
+            $fixturePath = self::$fixturePath;
         }
 
         if (is_null($fixturePath)) {
@@ -45,6 +89,13 @@ class FixtureSeeder
         $seeder->seed($table);
     }
 
+    /**
+     * Guess the default fixture path
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
     static function FindDefaultFixturePath()
     {
         $paths = [
