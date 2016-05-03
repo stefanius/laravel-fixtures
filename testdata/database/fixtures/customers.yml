@@ -1,0 +1,37 @@
+settings:
+  entity: App\Entities\Customer
+  pivot:
+    magazines: App\Entities\Magazine
+items:
+  mag_1:
+    id: 1
+    name: 'John Doe'
+    pivot:
+      magazines:
+        - magazines@mag_1
+        - magazines@mag_2
+        - magazines@mag_3
+  mag_2:
+    id: 2
+    name: 'Joanne Doe'
+  mag_3:
+    id: 3
+    name: 'Huey Doe'
+    pivot:
+      magazines:
+        - magazines@mag_3
+        - magazines@mag_4
+        - magazines@mag_5
+  mag_4:
+    id: 4
+    name: 'Lewey Doe'
+  mag_5:
+    id: 5
+    name: 'Dewey Doe'
+    pivot:
+      magazines:
+        - magazines@mag_1
+        - magazines@mag_2
+        - magazines@mag_3
+        - magazines@mag_4
+        - magazines@mag_5

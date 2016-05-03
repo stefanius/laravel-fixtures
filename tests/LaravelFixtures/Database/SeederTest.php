@@ -37,6 +37,7 @@ class SeederTest extends TestCase
 
         foreach ($data['items'] as $item) {
             unset($item['car_brand_id']); //Just test if a record is persisted. Relations are tested separate.
+            unset($item['pivot']); //Just test if a record is persisted. Relations are tested separate.
 
             $this->seeInDatabase($table, $item);
         }
@@ -52,6 +53,8 @@ class SeederTest extends TestCase
         return [
             ['car_brands'],
             ['car_types'],
+            ['magazines'],
+            ['customers'],
         ];
     }
 }

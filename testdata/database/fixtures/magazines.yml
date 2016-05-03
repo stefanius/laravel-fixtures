@@ -1,0 +1,21 @@
+settings:
+  entity: App\Entities\Magazine
+items:
+  mag_1:
+    id: 1
+    name: 'PHP For Dummies'
+  mag_2:
+    id: 2
+    name: 'Java, more then coffee'
+  mag_3:
+    id: 3
+    name: 'The great Developer'
+  mag_4:
+    id: 4
+    name: 'To code, or not to code?'
+  mag_5:
+    id: 5
+    name: 'Read this'
+  mag_6:
+    id: 6
+    name: 'Read that'
