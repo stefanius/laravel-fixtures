@@ -47,6 +47,8 @@ class FixtureSeeder
     }
 
     /**
+     * Seeds the table with fixture data
+     *
      * @param string $table
      * @param string $fixturePath
      *
@@ -76,6 +78,13 @@ class FixtureSeeder
         $seeder->seed($table);
     }
 
+    /**
+     * Guess the default fixture path
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
     static function FindDefaultFixturePath()
     {
         $paths = [
