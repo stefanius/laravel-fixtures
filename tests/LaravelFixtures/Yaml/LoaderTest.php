@@ -12,7 +12,7 @@ class LoaderTest extends TestCase
      */
     public function testConstructorWithNonExistingPath()
     {
-        $loader = new Loader('/this/path/does/not/exist/x/y/z');
+        new Loader('/this/path/does/not/exist/x/y/z');
     }
 
     /**
@@ -39,10 +39,13 @@ class LoaderTest extends TestCase
         $data = $loader->loadYmlData($filename);
 
         $this->assertArrayHasKey('settings', $data);
-        $this->assertArrayHasKey('items', $data);
 
         $this->assertEquals(count($data['items']), $numberOfItems);
-        $this->assertEquals(array_pop($data['items']), $expectedLastItem);
+
+        $lastItem = array_pop($data['items']);
+        unset($lastItem['pivot']);
+
+        $this->assertEquals($lastItem, $expectedLastItem);
     }
 
     /**
@@ -55,6 +58,9 @@ class LoaderTest extends TestCase
         return [
             ['car_brands', 4, ['id' => 4, 'name' => 'Peugeot']],
             ['car_types', 6, ['name' => 'Kadett', 'car_brand_id' => 'car_brands@car_1']],
+            ['countries', 3, ['id' => 3, 'name' => 'United States', 'language' => 'en']],
+            ['customers', 5, ['id' => 5, 'name' => 'Dewey Doe']],
+            ['magazines', 6, ['id' => 6, 'name' => 'Read that']],
         ];
     }
 }

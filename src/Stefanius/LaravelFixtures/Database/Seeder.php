@@ -2,7 +2,6 @@
 
 namespace Stefanius\LaravelFixtures\Database;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Stefanius\LaravelFixtures\Yaml\Loader;
 
@@ -37,31 +36,23 @@ class Seeder
      */
     public function seed($table)
     {
-        //$this->truncate($table);
-
         $data = $this->yamlLoader->loadYmlData($table);
 
         if ($this->command) {
             $this->command->getOutput()->writeln("<info>Seeded Fixture:</info> $table");
         }
 
-        switch ($data) {
-            case (array_key_exists('entity', $data['settings']) && !is_null($data['settings']['entity'])):
-                $this->withEntity($data['settings'], $data['items']);
-                break;
-            case (array_key_exists('factory', $data['settings']) && !is_null($data['settings']['factory'])):
-                $this->withFactory($data['settings'], $data['items']);
-                break;
-        }
+        $this->process($data['settings'], $data['items']);
     }
 
     /**
      * @param $settings
      * @param $items
+     *
+     * @throws \Exception
      */
-    protected function withEntity($settings, $items)
+    protected function process($settings, $items)
     {
-        $entity = $settings['entity'];
         $fk = false;
 
         if (array_key_exists('foreign_key', $settings)) {
@@ -79,44 +70,46 @@ class Seeder
 
             $item = $this->calculateRelativeDateTime($item, $settings);
 
-            $object = $entity::create($this->clean($item));
-
-            $this->seedPivots($object, $item, $settings);
-        }
-    }
-
-    /**
-     * @param $settings
-     * @param $items
-     */
-    protected function withFactory($settings, $items)
-    {
-        $entity = $settings['factory'];
-        $fk = false;
-
-        if (array_key_exists('foreign_key', $settings)) {
-            $fk = $settings['foreign_key'];
-        }
-
-        foreach ($items as $item) {
-            if($fk && is_array($fk)) {
-                foreach ($fk as $foreign => $primary) {
-                    if (array_key_exists($foreign, $item)) {
-                        $item[$foreign] = $this->findRelation($item[$foreign])[$primary];
-                    }
-                }
+            if (array_key_exists('entity', $settings) && !is_null($settings['entity'])) {
+                $object = $this->withEntity($settings['entity'], $item);
+            } elseif(array_key_exists('factory', $settings) && !is_null($settings['factory'])) {
+                $object = $this->withFactory($settings['factory'], $item);
+            } else {
+                throw new \Exception('YML files should be bound to either a "entity" or an "factory"');
             }
 
-            $item = $this->calculateRelativeDateTime($item, $settings);
-
-            $object = factory($entity)->create($this->clean($item));
-
             $this->seedPivots($object, $item, $settings);
         }
     }
 
     /**
+     * @param $entity
+     * @param $item
+     *
+     * @return mixed
+     */
+    protected function withEntity($entity, array $item)
+    {
+         return $entity::create($item);
+    }
+
+    /**
+     * @param $entity
+     * @param $item
+     *
+     * @return mixed
+     */
+    protected function withFactory($entity, array $item)
+    {
+        return factory($entity)->create($item);
+    }
+
+    /**
+     * Seed ManyToMany related objects
+     *
      * @param $object
+     * @param $item
+     * @param $settings
      */
     protected function seedPivots($object, $item, $settings)
     {
@@ -124,16 +117,16 @@ class Seeder
             return;
         }
 
-        foreach ($item['pivot'] as $key => $value) {
-            foreach ($value as $related) {
-                $relatedData = $this->findRelation($related);
+        foreach ($item['pivot'] as $method => $listItems) {
+            foreach ($listItems as $listItem) {
+                $relatedData = $this->findRelation($listItem);
 
-                $relatedClass = $settings['pivot'][$key];
+                $relatedClass = $settings['pivot'][$method];
 
                 $relatedObject = $relatedClass::find($relatedData['id']);
 
                 if ($relatedObject) {
-                    $object->{$key}()->save($relatedObject);
+                    $object->{$method}()->save($relatedObject);
                 }
             }
         }
@@ -153,28 +146,10 @@ class Seeder
 
         foreach ($settings['datetime'] as $datetime) {
             if (substr($item[$datetime], 0, 1) === '+' || substr($item[$datetime], 0, 1) === '-') {
-                $item[$datetime] = Carbon::now()->modify($item[$datetime])->format('Y-m-d');
+                $now = new \DateTime('now');
+
+                $item[$datetime] = $now->modify($item[$datetime])->format('Y-m-d');
             }
-        }
-
-        return $item;
-    }
-
-    /**
-     * Quick and very dirty. Will fix this before 2016-08-01
-     *
-     * @param $item
-     *
-     * @return mixed
-     */
-    protected function clean($item)
-    {
-        $unset = [
-            'pivot'
-        ];
-
-        foreach ($unset as $key) {
-            unset($item[$key]);
         }
 
         return $item;
@@ -183,12 +158,15 @@ class Seeder
     /**
      * @param $key
      *
-     * @return mixed
+     * @return string
+     *
+     * @throws \Exception
+     * @throws \Stefanius\LaravelFixtures\Exception\FileNotFoundException
      */
     protected function findRelation($key)
     {
         if (strpos($key, '@') === false) {
-            //trow error
+            throw new \Exception(sprintf("The key to the relation has to formed like 'ymlfile@itemkey', the value '%s' is incorrect.", $key));
         }
 
         $split = explode('@', $key);
