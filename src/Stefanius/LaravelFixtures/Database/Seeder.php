@@ -108,7 +108,7 @@ class Seeder
             }
 
             $item = $this->calculateRelativeDateTime($item, $settings);
-            
+
             $object = factory($entity)->create($this->clean($item));
 
             $this->seedPivots($object, $item, $settings);
@@ -154,9 +154,10 @@ class Seeder
         foreach ($settings['datetime'] as $datetime) {
             if (substr($item[$datetime], 0, 1) === '+' || substr($item[$datetime], 0, 1) === '-') {
                 $item[$datetime] = Carbon::now()->modify($item[$datetime])->format('Y-m-d');
-                dd($item[$datetime]);
             }
         }
+
+        return $item;
     }
 
     /**
