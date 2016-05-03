@@ -125,10 +125,13 @@ class Seeder
                 
                 $relatedData = $this->findRelation($related);
 
-                $relatedObject = $settings['pivot'][$key];
+                $relatedClass = $settings['pivot'][$key];
 
-                $relatedObject::find($relatedData['id']);
-                $object->{$exploded[0]}()->save($relatedObject);
+                $relatedObject = $relatedClass::find($relatedData['id']);
+
+                if ($relatedObject) {
+                    $object->{$exploded[0]}()->save($relatedObject);
+                }
             }
         }
     }
