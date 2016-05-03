@@ -20,27 +20,12 @@ class FixtureSeeder
     }
 
     /**
-     * The Laravel console command
-     */
-    static $command = null;
-
-    /**
      * The fixture path (optional)
      *
      * @var string
      */
     static $fixturePath = null;
-
-    /**
-     * Sets the Command parameter if you want to verbose the output.
-     *
-     * @param $command
-     */
-    static function SetCommand($command)
-    {
-        self::$command = $command;
-    }
-
+    
     /**
      * Sets the default fixturepath.
      *

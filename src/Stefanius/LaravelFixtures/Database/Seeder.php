@@ -76,7 +76,9 @@ class Seeder
                 }
             }
 
-            $entity::create($item);
+            $object = $entity::create($this->clean($item));
+
+            $this->seedPivots($object, $item, $settings);
         }
     }
 
@@ -102,8 +104,56 @@ class Seeder
                 }
             }
 
-            factory($entity)->create($item);
+            $object = factory($entity)->create($this->clean($item));
+
+            $this->seedPivots($object, $item, $settings);
         }
+    }
+
+    /**
+     * @param $object
+     */
+    protected function seedPivots($object, $item, $settings)
+    {
+        if (!array_key_exists('pivot', $item)) {
+            return;
+        }
+
+        foreach ($item['pivot'] as $key => $value) {
+            foreach ($value as $related) {
+                $exploded = explode('@', $related);
+                
+                $relatedData = $this->findRelation($related);
+
+                $relatedClass = $settings['pivot'][$key];
+
+                $relatedObject = $relatedClass::find($relatedData['id']);
+
+                if ($relatedObject) {
+                    $object->{$exploded[0]}()->save($relatedObject);
+                }
+            }
+        }
+    }
+
+    /**
+     * Quick and very dirty. Will fix this before 2016-08-01
+     *
+     * @param $item
+     *
+     * @return mixed
+     */
+    protected function clean($item)
+    {
+        $unset = [
+            'pivot'
+        ];
+
+        foreach ($unset as $key) {
+            unset($item[$key]);
+        }
+
+        return $item;
     }
 
     /**
