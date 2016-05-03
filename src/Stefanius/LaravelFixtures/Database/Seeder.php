@@ -121,8 +121,6 @@ class Seeder
 
         foreach ($item['pivot'] as $key => $value) {
             foreach ($value as $related) {
-                $exploded = explode('@', $related);
-                
                 $relatedData = $this->findRelation($related);
 
                 $relatedClass = $settings['pivot'][$key];
@@ -130,7 +128,7 @@ class Seeder
                 $relatedObject = $relatedClass::find($relatedData['id']);
 
                 if ($relatedObject) {
-                    $object->{$exploded[0]}()->save($relatedObject);
+                    $object->{$key}()->save($relatedObject);
                 }
             }
         }
