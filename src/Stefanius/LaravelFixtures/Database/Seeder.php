@@ -2,6 +2,7 @@
 
 namespace Stefanius\LaravelFixtures\Database;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Stefanius\LaravelFixtures\Yaml\Loader;
 
@@ -76,6 +77,8 @@ class Seeder
                 }
             }
 
+            $item = $this->calculateRelativeDateTime($item, $settings);
+
             $object = $entity::create($this->clean($item));
 
             $this->seedPivots($object, $item, $settings);
@@ -104,6 +107,8 @@ class Seeder
                 }
             }
 
+            $item = $this->calculateRelativeDateTime($item, $settings);
+            
             $object = factory($entity)->create($this->clean($item));
 
             $this->seedPivots($object, $item, $settings);
@@ -130,6 +135,26 @@ class Seeder
                 if ($relatedObject) {
                     $object->{$key}()->save($relatedObject);
                 }
+            }
+        }
+    }
+
+    /**
+     * @param array $item
+     * @param array $settings
+     *
+     * @return array
+     */
+    protected function calculateRelativeDateTime(array $item, array $settings)
+    {
+        if (!array_key_exists('datetime', $settings)) {
+            return $item;
+        }
+
+        foreach ($settings['datetime'] as $datetime) {
+            if (substr($item[$datetime], 0, 1) === '+' || substr($item[$datetime], 0, 1) === '-') {
+                $item[$datetime] = Carbon::now()->modify($item[$datetime])->format('Y-m-d');
+                dd($item[$datetime]);
             }
         }
     }
