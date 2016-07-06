@@ -10,7 +10,7 @@ class FileNotFoundException extends \Exception
 
     /**
      * FileNotFoundException constructor.
-     * 
+     *
      * @param string    $filename
      * @param Exception $previous
      */
