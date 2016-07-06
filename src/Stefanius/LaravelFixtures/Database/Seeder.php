@@ -60,7 +60,7 @@ class Seeder
         }
 
         foreach ($items as $item) {
-            if($fk && is_array($fk)) {
+            if ($fk && is_array($fk)) {
                 foreach ($fk as $foreign => $primary) {
                     if (array_key_exists($foreign, $item)) {
                         $item[$foreign] = $this->findRelation($item[$foreign])[$primary];
@@ -72,7 +72,7 @@ class Seeder
 
             if (array_key_exists('entity', $settings) && !is_null($settings['entity'])) {
                 $object = $this->withEntity($settings['entity'], $item);
-            } elseif(array_key_exists('factory', $settings) && !is_null($settings['factory'])) {
+            } elseif (array_key_exists('factory', $settings) && !is_null($settings['factory'])) {
                 $object = $this->withFactory($settings['factory'], $item);
             } else {
                 throw new \Exception('YML files should be bound to either a "entity" or an "factory"');
@@ -166,7 +166,12 @@ class Seeder
     protected function findRelation($key)
     {
         if (strpos($key, '@') === false) {
-            throw new \Exception(sprintf("The key to the relation has to formed like 'ymlfile@itemkey', the value '%s' is incorrect.", $key));
+            throw new \Exception(
+                sprintf(
+                    "The key to the relation has to formed like 'ymlfile@itemkey', the value '%s' is incorrect.",
+                    $key
+                )
+            );
         }
 
         $split = explode('@', $key);
