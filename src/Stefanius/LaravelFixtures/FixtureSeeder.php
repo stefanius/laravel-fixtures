@@ -14,7 +14,7 @@ class FixtureSeeder
      * Sets the Command parameter if you want to verbose the output.
      * @param $command
      */
-    static function SetCommand($command)
+    public static function SetCommand($command)
     {
         self::$command = $command;
     }
@@ -24,7 +24,7 @@ class FixtureSeeder
      *
      * @var string
      */
-    static $fixturePath = null;
+    private static $fixturePath = null;
     
     /**
      * Sets the default fixturepath.
@@ -33,7 +33,7 @@ class FixtureSeeder
      *
      * @throws PathNotFoundException
      */
-    static function SetFixturePath($fixturePath)
+    public static function SetFixturePath($fixturePath)
     {
         if (is_null($fixturePath) || !is_dir(base_path($fixturePath))) {
             throw new PathNotFoundException($fixturePath);
@@ -50,7 +50,7 @@ class FixtureSeeder
      *
      * @throws \Stefanius\LaravelFixtures\Exception\PathNotFoundException
      */
-    static function Seed($table, $fixturePath = null)
+    public static function Seed($table, $fixturePath = null)
     {
         if (is_null($table) || !is_string($table)) {
             throw new \InvalidArgumentException('The $table argument has to be a string and may not be NULL.');
@@ -81,7 +81,7 @@ class FixtureSeeder
      *
      * @throws \Exception
      */
-    static function FindDefaultFixturePath()
+    public static function FindDefaultFixturePath()
     {
         $paths = [
             'database/fixtures',
