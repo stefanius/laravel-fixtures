@@ -166,7 +166,12 @@ class Seeder
     protected function findRelation($key)
     {
         if (strpos($key, '@') === false) {
-            throw new \Exception(sprintf("The key to the relation has to formed like 'ymlfile@itemkey', the value '%s' is incorrect.", $key));
+            throw new \Exception(
+                sprintf(
+                    "The key to the relation has to formed like 'ymlfile@itemkey', the value '%s' is incorrect.",
+                    $key
+                )
+            );
         }
 
         $split = explode('@', $key);
