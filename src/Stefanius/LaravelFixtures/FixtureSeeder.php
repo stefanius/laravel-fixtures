@@ -2,22 +2,17 @@
 
 namespace Stefanius\LaravelFixtures;
 
+use Illuminate\Console\Command;
 use Stefanius\LaravelFixtures\Database\Seeder;
 use Stefanius\LaravelFixtures\Exception\PathNotFoundException;
 use Stefanius\LaravelFixtures\Yaml\Loader;
 
 class FixtureSeeder
 {
-    static $command = null;
-
     /**
-     * Sets the Command parameter if you want to verbose the output.
-     * @param $command
+     * @var Command
      */
-    public static function SetCommand($command)
-    {
-        self::$command = $command;
-    }
+    private static $command = null;
 
     /**
      * The fixture path (optional)
@@ -25,6 +20,16 @@ class FixtureSeeder
      * @var string
      */
     private static $fixturePath = null;
+
+    /**
+     * Sets the Command parameter if you want to verbose the output.
+     *
+     * @param Command $command
+     */
+    public static function SetCommand(Command $command)
+    {
+        self::$command = $command;
+    }
     
     /**
      * Sets the default fixturepath.
