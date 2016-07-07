@@ -67,8 +67,8 @@ class Seeder
                 $object = $this->withEntity($settings['entity'], $item);
             } elseif (array_key_exists('factory', $settings) && !is_null($settings['factory'])) {
                 $object = $this->withFactory($settings['factory'], $item);
-            } else {
-                throw new \Exception('YML files should be bound to either a "entity" or an "factory"');
+//            } else {
+//                throw new \Exception('YML files should be bound to either a "entity" or an "factory"');
             }
 
             $this->seedPivots($object, $item, $settings);
