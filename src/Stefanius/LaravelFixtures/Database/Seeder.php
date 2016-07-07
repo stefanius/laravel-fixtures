@@ -92,7 +92,7 @@ class Seeder
 
     /**
      * @param $settings
-     * 
+     *
      * @return bool
      */
     protected function useFactory($settings)
