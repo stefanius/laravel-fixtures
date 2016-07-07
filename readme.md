@@ -25,3 +25,13 @@ When the documentation does not provide the information you needed or hoped for,
 
 ## In progress
 The package is almost stable but the readme.md file is still in progress. Keep in touch to see if there are any updates!
+
+## Badges
+
+Some badges are handy to place them on top. But, in a time of 'badge-festing' I want to join the party, and some badges are a bit obscure.
+
+[![Total Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/downloads)](https://packagist.org/packages/stefanius/laravel-fixtures)
+[![Monthly Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/d/monthly)](https://packagist.org/packages/stefanius/laravel-fixtures)
+[![Daily Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/d/daily)](https://packagist.org/packages/stefanius/laravel-fixtures)
+
+[![composer.lock](https://poser.pugx.org/stefanius/laravel-fixtures/composerlock)](https://packagist.org/packages/stefanius/laravel-fixtures)
