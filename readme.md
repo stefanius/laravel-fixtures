@@ -33,5 +33,8 @@ Some badges are handy to place them on top. But, in a time of 'badge-festing' I 
 [![Total Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/downloads)](https://packagist.org/packages/stefanius/laravel-fixtures)
 [![Monthly Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/d/monthly)](https://packagist.org/packages/stefanius/laravel-fixtures)
 [![Daily Downloads](https://poser.pugx.org/stefanius/laravel-fixtures/d/daily)](https://packagist.org/packages/stefanius/laravel-fixtures)
-
+[![Build Status](https://travis-ci.org/stefanius/laravel-fixtures.svg)](https://travis-ci.org/stefanius/laravel-fixtures)
+[![Latest Stable Version](https://poser.pugx.org/stefanius/laravel-fixtures/v/stable)](https://packagist.org/packages/stefanius/laravel-fixtures) 
+[![Latest Unstable Version](https://poser.pugx.org/stefanius/laravel-fixtures/v/unstable)](https://packagist.org/packages/stefanius/laravel-fixtures) 
+[![License](https://poser.pugx.org/stefanius/laravel-fixtures/license)](https://packagist.org/packages/stefanius/laravel-fixtures)
 [![composer.lock](https://poser.pugx.org/stefanius/laravel-fixtures/composerlock)](https://packagist.org/packages/stefanius/laravel-fixtures)
