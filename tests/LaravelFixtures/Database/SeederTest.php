@@ -37,9 +37,15 @@ class SeederTest extends TestCase
 
         $this->seePersistenceWithoutRelations($table, $data['items'], $data['settings']);
         $this->seePersistenceWithRelations($table, $data['items'], $data['settings']);
-
     }
 
+    /**
+     * @param $key
+     *
+     * @return mixed
+     *
+     * @throws \Stefanius\LaravelFixtures\Exception\FileNotFoundException
+     */
     private function loadRelatedObjectData($key)
     {
         if (strpos($key, '@') === false) {
@@ -55,6 +61,11 @@ class SeederTest extends TestCase
         return $data['items'][$split[1]];
     }
 
+    /**
+     * @param $table
+     * @param $items
+     * @param $settings
+     */
     private function seePersistenceWithoutRelations($table, $items, $settings)
     {
         foreach ($items as $item) {
@@ -64,6 +75,11 @@ class SeederTest extends TestCase
         }
     }
 
+    /**
+     * @param $table
+     * @param $items
+     * @param $settings
+     */
     private function seePersistenceWithRelations($table, $items, $settings)
     {
         if (!array_key_exists('foreign_key', $settings)) {
@@ -90,7 +106,7 @@ class SeederTest extends TestCase
      *
      * @param  string  $table
      * @param  array  $data
-     * @param  string  $connection
+     *
      * @return $this
      */
     protected function loadFromDatabase($table, array $data)
