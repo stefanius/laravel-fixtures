@@ -80,7 +80,7 @@ class Seeder
     protected function createObject($settings, $item)
     {
         if (!(array_key_exists('entity', $settings) && !is_null($settings['entity']))) {
-            throw new \Exception('YML files should be bound to either an Entity');
+            throw new \Exception('YML files should be bound to an Entity');
         }
 
         if ($this->useFactory($settings)) {

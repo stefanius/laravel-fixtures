@@ -149,6 +149,7 @@ class SeederTest extends TestCase
             ['car_types'],
             ['magazines'],
             ['customers'],
+            ['countries'],
         ];
     }
 }

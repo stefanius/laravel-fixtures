@@ -58,7 +58,7 @@ class LoaderTest extends TestCase
         return [
             ['car_brands', 4, ['id' => 4, 'name' => 'Peugeot']],
             ['car_types', 6, ['name' => 'Kadett', 'car_brand_id' => 'car_brands@car_1']],
-            ['countries', 3, ['id' => 3, 'name' => 'United States', 'language' => 'en']],
+            ['countries', 4, ['id' => 4, 'name' => 'Undefined']],
             ['customers', 5, ['id' => 5, 'name' => 'Dewey Doe']],
             ['magazines', 6, ['id' => 6, 'name' => 'Read that']],
         ];

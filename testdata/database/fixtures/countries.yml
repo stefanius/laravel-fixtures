@@ -1,5 +1,6 @@
 settings:
-  factory: App\Entities\Country
+  entity: App\Entities\Country
+  use_factory: true
 items:
   country_1:
     id: 1
@@ -13,3 +14,6 @@ items:
     id: 3
     name: United States
     language: en
+  country_4:
+    id: 4
+    name: Undefined
