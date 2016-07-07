@@ -20,5 +20,8 @@ to add a Facade or ServiceProvider.
 
 ``` shell> composer require stefanius/laravel-fixtures ```
 
+## Example data
+When the documentation does not provide the information you needed or hoped for, you may want to check the example data. This data is also used to test the package and therefore it will give a good impression of the package. You can find the data: https://github.com/stefanius/laravel-fixtures/tree/master/testdata/database/fixtures 
+
 ## In progress
 The package is almost stable but the readme.md file is still in progress. Keep in touch to see if there are any updates!
