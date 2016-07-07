@@ -83,11 +83,29 @@ class Seeder
             throw new \Exception('YML files should be bound to either an Entity');
         }
 
-        if (array_key_exists('use_factory', $settings) && is_bool($settings['use_factory']) && $settings['use_factory']) {
+        if ($this->useFactory($settings)) {
             return $this->withFactory($settings['entity'], $item);
         }
 
         return $this->withEntity($settings['entity'], $item);
+    }
+
+    /**
+     * @param $settings
+     * 
+     * @return bool
+     */
+    protected function useFactory($settings)
+    {
+        if (!array_key_exists('use_factory', $settings)) {
+            return false;
+        }
+
+        if (!is_bool($settings['use_factory'])) {
+            return false;
+        }
+
+        return $settings['use_factory'];
     }
 
     /**
