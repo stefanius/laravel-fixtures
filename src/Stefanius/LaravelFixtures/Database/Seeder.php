@@ -63,16 +63,31 @@ class Seeder
             $item = $this->prepareForeignKeys($fk, $item);
             $item = $this->calculateRelativeDateTime($item, $settings);
 
-            if (array_key_exists('entity', $settings) && !is_null($settings['entity'])) {
-                $object = $this->withEntity($settings['entity'], $item);
-            } elseif (array_key_exists('factory', $settings) && !is_null($settings['factory'])) {
-                $object = $this->withFactory($settings['factory'], $item);
-//            } else {
-//                throw new \Exception('YML files should be bound to either a "entity" or an "factory"');
-            }
+            $object = $this->createObject($settings, $item);
 
             $this->seedPivots($object, $item, $settings);
         }
+    }
+
+    /**
+     * @param $settings
+     * @param $item
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    protected function createObject($settings, $item)
+    {
+        if (!(array_key_exists('entity', $settings) && !is_null($settings['entity']))) {
+            throw new \Exception('YML files should be bound to either an Entity');
+        }
+
+        if (array_key_exists('use_factory', $settings) && is_bool($settings['use_factory']) && $settings['use_factory']) {
+            return $this->withFactory($settings['entity'], $item);
+        }
+
+        return $this->withEntity($settings['entity'], $item);
     }
 
     /**
