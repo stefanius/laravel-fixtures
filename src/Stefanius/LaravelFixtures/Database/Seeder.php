@@ -60,14 +60,7 @@ class Seeder
         }
 
         foreach ($items as $item) {
-            if ($fk && is_array($fk)) {
-                foreach ($fk as $foreign => $primary) {
-                    if (array_key_exists($foreign, $item)) {
-                        $item[$foreign] = $this->findRelation($item[$foreign])[$primary];
-                    }
-                }
-            }
-
+            $item = $this->prepareForeignKeys($fk, $item);
             $item = $this->calculateRelativeDateTime($item, $settings);
 
             if (array_key_exists('entity', $settings) && !is_null($settings['entity'])) {
@@ -80,6 +73,29 @@ class Seeder
 
             $this->seedPivots($object, $item, $settings);
         }
+    }
+
+    /**
+     * @param $fk
+     * @param $item
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    protected function prepareForeignKeys($fk, $item)
+    {
+        if (!($fk && is_array($fk))) {
+            return $item;
+        }
+
+        foreach ($fk as $foreign => $primary) {
+            if (array_key_exists($foreign, $item)) {
+                $item[$foreign] = $this->findRelation($item[$foreign])[$primary];
+            }
+        }
+
+        return $item;
     }
 
     /**
