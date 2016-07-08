@@ -4,6 +4,7 @@ namespace Stefanius\LaravelFixtures\Yaml;
 
 use Stefanius\LaravelFixtures\Exception\FileNotFoundException;
 use Stefanius\LaravelFixtures\Exception\PathNotFoundException;
+use Symfony\Component\Yaml\Yaml;
 
 class Loader
 {
@@ -13,6 +14,8 @@ class Loader
      * Loader constructor.
      *
      * @param $fixtureDataPath
+     *
+     * @throws PathNotFoundException
      */
     public function __construct($fixtureDataPath)
     {
@@ -46,6 +49,6 @@ class Loader
             throw new FileNotFoundException($ymlFilename);
         }
 
-        return \Symfony\Component\Yaml\Yaml::parse(file_get_contents($ymlFilename));
+        return Yaml::parse(file_get_contents($ymlFilename));
     }
 }
